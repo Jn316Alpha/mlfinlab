@@ -79,7 +79,7 @@ class RunBars(BaseBars):
             # Set variables
             cum_ticks += 1
             date_time = row[0]
-            price = np.float(row[1])
+            price = float(row[1])
             volume = row[2]
             cum_volume += volume
 
@@ -160,11 +160,11 @@ class RunBars(BaseBars):
             cum_ticks = int(latest_entry.cum_ticks)
             buy_ticks = int(latest_entry.buy_ticks)
             cum_volume = int(latest_entry.cum_volume)
-            low_price = np.float(latest_entry.low)
-            high_price = np.float(latest_entry.high)
+            low_price = float(latest_entry.low)
+            high_price = float(latest_entry.high)
             # Cumulative buy and sell imbalances for a particular run calculation (theta_t in Prado book)
-            cum_theta_buy = np.float(latest_entry.cum_theta_buy)
-            cum_theta_sell = np.float(latest_entry.cum_theta_sell)
+            cum_theta_buy = float(latest_entry.cum_theta_buy)
+            cum_theta_sell = float(latest_entry.cum_theta_sell)
 
         else:
             # Reset counters

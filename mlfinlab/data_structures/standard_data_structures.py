@@ -55,7 +55,7 @@ class StandardBars(BaseBars):
         for row in data.values:
             # Set variables
             date_time = row[0]
-            price = np.float(row[1])
+            price = float(row[1])
             volume = row[2]
 
             # Update high low prices
@@ -99,10 +99,10 @@ class StandardBars(BaseBars):
 
             # Update variables based on cache
             cum_ticks = int(last_entry.cum_ticks)
-            cum_dollar_value = np.float(last_entry.cum_dollar)
+            cum_dollar_value = float(last_entry.cum_dollar)
             cum_volume = last_entry.cum_volume
-            low_price = np.float(last_entry.low)
-            high_price = np.float(last_entry.high)
+            low_price = float(last_entry.low)
+            high_price = float(last_entry.high)
         else:
             # Reset counters
             cum_ticks, cum_dollar_value, cum_volume, high_price, low_price = 0, 0, 0, -np.inf, np.inf

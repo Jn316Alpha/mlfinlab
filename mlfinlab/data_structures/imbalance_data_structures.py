@@ -74,7 +74,7 @@ class ImbalanceBars(BaseBars):
             # Set variables
             cum_ticks += 1
             date_time = row[0]
-            price = np.float(row[1])
+            price = float(row[1])
             volume = row[2]
             cum_volume += volume
 
@@ -131,10 +131,10 @@ class ImbalanceBars(BaseBars):
             # Update variables based on cache
             cum_ticks = int(latest_entry.cum_ticks)
             cum_volume = int(latest_entry.cum_volume)
-            low_price = np.float(latest_entry.low)
-            high_price = np.float(latest_entry.high)
+            low_price = float(latest_entry.low)
+            high_price = float(latest_entry.high)
             # cumulative imbalance for a particular imbalance calculation (theta_t in Prado book)
-            cum_theta = np.float(latest_entry.cum_theta)
+            cum_theta = float(latest_entry.cum_theta)
         else:
             # Reset counters
             cum_ticks, cum_theta, cum_volume = 0, 0, 0
