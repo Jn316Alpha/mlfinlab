@@ -1,0 +1,14 @@
+# Core ML Stack (Python 3.10-3.13 compatible)
+pandas>=2.1.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+numba>=0.59.0
+joblib>=1.3.0
+
+# Plotting & Visualization
+matplotlib>=3.8.0
+
+# Utility & Maintenance
+pylint>=3.0.0
+coverage>=7.3.0
