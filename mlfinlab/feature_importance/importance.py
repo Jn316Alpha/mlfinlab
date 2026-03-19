@@ -61,6 +61,9 @@ def feature_importance_mean_decrease_accuracy(clf, X, y, cv_gen, sample_weight=N
 
     if sample_weight is None:
         sample_weight = np.ones((X.shape[0],))
+    # Fix: Convert pandas Series to numpy array for integer indexing
+    elif isinstance(sample_weight, pd.Series):
+        sample_weight = sample_weight.values
 
     fold_metrics_values, features_metrics_values = pd.Series(), pd.DataFrame(columns=X.columns)
 
@@ -79,7 +82,10 @@ def feature_importance_mean_decrease_accuracy(clf, X, y, cv_gen, sample_weight=N
         # Get feature specific metric on out-of-sample fold
         for j in X.columns:
             X1_ = X.iloc[test, :].copy(deep=True)
-            np.random.shuffle(X1_[j].values)  # Permutation of a single column
+            # Fix: Copy values before shuffling to avoid read-only array error
+            col_values = X1_[j].values.copy()
+            np.random.shuffle(col_values)
+            X1_[j] = col_values
             if scoring == 'neg_log_loss':
                 prob = fit.predict_proba(X1_)
                 features_metrics_values.loc[i, j] = -scoring_func(y.iloc[test], prob, sample_weight=sample_weight[test],

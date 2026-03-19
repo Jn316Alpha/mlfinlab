@@ -105,7 +105,7 @@ class TestSequentiallyBootstrappedBagging(unittest.TestCase):
         X.loc[labels.index, 'y'] = labels.bin
 
         # Generate features (some of them are informative, others are just noise)
-        for index, value in X.y.iteritems():
+        for index, value in X.y.items():
             X.loc[index, 'label_prob_0.6'] = _generate_label_with_prob(value, 0.6)
             X.loc[index, 'label_prob_0.5'] = _generate_label_with_prob(value, 0.5)
             X.loc[index, 'label_prob_0.3'] = _generate_label_with_prob(value, 0.3)

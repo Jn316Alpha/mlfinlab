@@ -24,11 +24,22 @@ def get_daily_vol(close, lookback=100):
     :param lookback: lookback period to compute volatility
     :return: series of daily volatility value
     """
-    # daily vol re-indexed to close
+    # Find index positions from 1 day ago
     df0 = close.index.searchsorted(close.index - pd.Timedelta(days=1))
     df0 = df0[df0 > 0]
-    df0 = (pd.Series(close.index[df0 - 1], index=close.index[close.shape[0] - df0.shape[0]:]))
 
-    df0 = close.loc[df0.index] / close.loc[df0.values].values - 1  # daily returns
-    df0 = df0.ewm(span=lookback).std()
+    # Get previous close prices by position (use iloc with positions adjusted)
+    # df0 contains positions, so df0-1 gives the previous day's position
+    prev_positions = df0 - 1
+
+    # Align with current index: take the last len(df0) elements of close
+    current_index = close.index[close.shape[0] - df0.shape[0]:]
+
+    # Calculate daily returns using position-based indexing
+    current_close = close.loc[current_index]
+    prev_close = close.iloc[prev_positions].values
+    daily_ret = current_close / prev_close - 1
+
+    # Apply EWM standard deviation
+    df0 = daily_ret.ewm(span=lookback).std()
     return df0

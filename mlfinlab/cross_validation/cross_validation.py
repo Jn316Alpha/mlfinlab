@@ -26,7 +26,7 @@ def ml_get_train_times(samples_info_sets: pd.Series, test_times: pd.Series) -> p
     :param test_times: Times for the test dataset.
     """
     train = samples_info_sets.copy(deep=True)
-    for start_ix, end_ix in test_times.iteritems():
+    for start_ix, end_ix in test_times.items():
         df0 = train[(start_ix <= train.index) & (train.index <= end_ix)].index  # Train starts within test
         df1 = train[(start_ix <= train) & (train <= end_ix)].index  # Train ends within test
         df2 = train[(train.index <= start_ix) & (end_ix <= train)].index  # Train envelops test
@@ -87,7 +87,8 @@ class PurgedKFold(KFold):
             if end_ix < X.shape[0]:
                 end_ix += embargo
 
-            test_times = pd.Series(index=[self.samples_info_sets[start_ix]], data=[self.samples_info_sets[end_ix-1]])
+            # Fix: Use iloc for integer indexing on Series with datetime index
+            test_times = pd.Series(index=[self.samples_info_sets.iloc[start_ix]], data=[self.samples_info_sets.iloc[end_ix-1]])
             train_times = ml_get_train_times(self.samples_info_sets, test_times)
 
             train_indices = []

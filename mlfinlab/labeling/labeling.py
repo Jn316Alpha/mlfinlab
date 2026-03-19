@@ -46,7 +46,7 @@ def apply_pt_sl_on_t1(close, events, pt_sl, molecule):  # pragma: no cover
         stop_loss = pd.Series(index=events.index)  # NaNs
 
     # Get events
-    for loc, vertical_barrier in events_['t1'].fillna(close.index[-1]).iteritems():
+    for loc, vertical_barrier in events_['t1'].fillna(close.index[-1]).items():
         closing_prices = close[loc: vertical_barrier]  # Path prices for a given trade
         cum_returns = (closing_prices / close[loc] - 1) * events_.at[loc, 'side']  # Path returns
         out.loc[loc, 'sl'] = cum_returns[cum_returns < stop_loss[loc]].index.min()  # Earliest stop loss date

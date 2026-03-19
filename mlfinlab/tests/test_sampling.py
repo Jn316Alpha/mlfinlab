@@ -21,7 +21,7 @@ def book_ind_mat_implementation(bar_index, label_endtime):
     Book implementation of get_ind_matrix function
     """
     ind_mat = pd.DataFrame(0, index=bar_index, columns=range(label_endtime.shape[0]))
-    for i, (start, end) in enumerate(label_endtime.iteritems()):
+    for i, (start, end) in enumerate(label_endtime.items()):
         ind_mat.loc[start:end, i] = 1.
     return ind_mat
 
